@@ -3,49 +3,65 @@ import ProductCard from '@/components/ProductCard.vue';
 import Pagination from '@/components/Pagination.vue';
 import Loading from '@/components/Loading.vue';
 
-import { onMounted ,ref, watch } from 'vue';
+import { onMounted ,ref, watch, watchEffect } from 'vue';
 import axios from 'axios';
 
 const products = ref([]);
 const page = ref(1);
 const limit = ref(8);
-const API_URL = `http://localhost:3000/products?_page=${page.value}&_per_page=${limit.value}`;
 const isLoading = ref(true);
 
-onMounted(async () => {
+async function fetchData() {
+	const API_URL = `http://localhost:3000/products?_page=${page.value}&_per_page=${limit.value}`;
 	try {
-		products.value = await axios.get(API_URL).then((res) => res.data);
-		onsole.log("first fetch")
-	} catch (error) {
-		console.log(error)
-	} finally {
-		isLoading.value = false
-	}	
-});
-
-//Suspense Componen
-// products.value = await axios.get(`http://localhost:3000/products?_page=${page.value}&_per_page=${limit.value}`).then((res) => res.data);
-
-watch(page, async () => {
-	try {
-		isLoading.value = true;
-		products.value = await axios
-		.get(`http://localhost:3000/products?_page=${page.value}&_per_page=${limit.value}`)
-		.then((res) => res.data);
-		onsole.log("first fetch")
-	} catch (error) {
+		isLoading.value = true
+		const response = await axios.get(API_URL);
+		products.value = response.data;
+	} catch(error) {
 		console.log(error)
 	} finally {
 		isLoading.value = false
 	}
-})
+}
 
+watchEffect(() => {
+	fetchData()
+})
 
 function changePage(newPage) {
 	if (newPage < 1) return;
 	if (newPage > products.value.pages) return;
 	page.value = newPage
 }
+
+// onMounted(async () => {
+// 	try {
+// 		products.value = await axios.get(API_URL).then((res) => res.data);
+// 		onsole.log("first fetch")
+// 	} catch (error) {
+// 		console.log(error)
+// 	} finally {
+// 		isLoading.value = false
+// 	}	
+// });
+
+//Suspense Componen
+// products.value = await axios.get(`http://localhost:3000/products?_page=${page.value}&_per_page=${limit.value}`).then((res) => res.data);
+
+// watch(page, async () => {
+// 	try {
+// 		isLoading.value = true;
+// 		products.value = await axios
+// 		.get(`http://localhost:3000/products?_page=${page.value}&_per_page=${limit.value}`)
+// 		.then((res) => res.data);
+// 		onsole.log("first fetch")
+// 	} catch (error) {
+// 		console.log(error)
+// 	} finally {
+// 		isLoading.value = false
+// 	}
+// })
+
 
 //fetch data menggunakan axios dan async component
 // async function getProducts() {
