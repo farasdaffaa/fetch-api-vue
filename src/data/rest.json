@@ -1,12 +1,12 @@
 {
   "products": [
     {
-			"id": "1",
-			"title": "Smartphone Galaxy S22",
-			"description": "The latest flagship smartphone with advanced camera features and 5G connectivity.",
-			"price": 899.99,
-			"image": "https://via.placeholder.com/150"
-		},
+      "title": "samsung Galaxy S22",
+      "description": "The latest flagship smartphone with advanced camera features and 5G connectivity.",
+      "price": 899,
+      "image": "https://via.placeholder.com/150",
+      "id": "1"
+    },
     {
       "id": "2",
       "title": "Laptop ProBook X360",
@@ -418,6 +418,13 @@
       "title": "Compact Countertop Microwave",
       "description": "Effortlessly heat and cook your meals with this compact countertop microwave featuring multiple cooking presets.",
       "price": 79.99,
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "id": "b42e",
+      "title": "Apple Vision",
+      "description": "vr masa depan",
+      "price": 200000,
       "image": "https://via.placeholder.com/150"
     }
   ]
